@@ -1,0 +1,538 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>运单列表</title>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <nav>
+  
+    <a href="/">首页</a>
+  
+    <a href="/about.html">关于</a>
+  
+    <a href="/query.html">订单查询</a>
+  
+    <a href="/shipments.html" class="current">运单列表</a>
+  
+    <a href="/add_shipment.html">添加运单</a>
+  
+    <a href="/staff.html">团队</a>
+  
+</nav>
+    <div class="shipment-dashboard">
+  <h1>外贸发货看板 / Shipment Dashboard</h1>
+  
+  <div class="dashboard-actions">
+    <a href="/add_shipment.html" class="btn-add">添加新运单 / Add New Shipment</a>
+  </div>
+  
+  <!-- Filter controls -->
+  <div class="filter-controls">
+    <h3>按状态筛选 / Filter by Status</h3>
+    <div class="filter-buttons">
+      <a href="#all" class="filter-btn active">全部 / All</a>
+      <a href="#pending" class="filter-btn">未发货 / Pending</a>
+      <a href="#shipped" class="filter-btn">已发货 / Shipped</a>
+      <a href="#arrived" class="filter-btn">已到达 / Arrived</a>
+      <a href="#picked" class="filter-btn">已提货 / Picked Up</a>
+    </div>
+  </div>
+
+  <!-- Status counts -->
+  <div class="status-summary">
+    
+    
+    
+    
+    
+    <div class="status-item">
+      <h4>未发货 / Pending</h4>
+      <div class="count">1</div>
+    </div>
+    <div class="status-item">
+      <h4>已发货 / Shipped</h4>
+      <div class="count">1</div>
+    </div>
+    <div class="status-item">
+      <h4>已到达 / Arrived</h4>
+      <div class="count">1</div>
+    </div>
+    <div class="status-item">
+      <h4>已提货 / Picked Up</h4>
+      <div class="count">1</div>
+    </div>
+  </div>
+
+  <!-- Shipment list -->
+  <div class="shipment-list">
+    <h2>运单列表 / Shipment List</h2>
+    
+    <div class="shipments all-shipments">
+      
+        
+        <div class="shipment-card status-已发货">
+          <div class="shipment-header">
+            <h3><a href="/shipment_detail.html?tracking=NTS-2304_ELECT_50_20250507T093000">NTS-2304_ELECT_50_20250507T093000</a></h3>
+            <div class="status-badge">
+               🚢 运输中 / In Transit
+                
+            </div>
+          </div>
+          
+          <div class="shipment-details">
+            <div class="detail-row">
+              <span class="label">客户 / Client:</span>
+              <span class="value">Ruixin (SA)</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">联系方式 / Contact:</span>
+              <span class="value">+966 551234567</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">客户时区 / Client Timezone:</span>
+              <span class="value">UTC3</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">运输方式 / Transport:</span>
+              <span class="value">Sea</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">包裹数量 / Packages:</span>
+              <span class="value">50</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">货物描述 / Description:</span>
+              <span class="value">Electronic components, model XC-2304</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">创建时间 / Created:</span>
+              <span class="value">2025年05月07日 09:30</span>
+            </div>
+            
+            
+            <div class="detail-row">
+              <span class="label">发货日期 / Shipped:</span>
+              <span class="value">2025年05月08日</span>
+            </div>
+            
+            
+            <div class="detail-row">
+              <span class="label">预计到达 / Est. Arrival:</span>
+              <span class="value">2025年06月07日</span>
+            </div>
+            
+            
+            
+            
+          </div>
+        </div>
+      
+        
+        <div class="shipment-card status-未发货">
+          <div class="shipment-header">
+            <h3><a href="/shipment_detail.html?tracking=ABC-1234_TECH_25_20250505T143000">ABC-1234_TECH_25_20250505T143000</a></h3>
+            <div class="status-badge">
+               🟡 等待发货 / Pending
+                
+            </div>
+          </div>
+          
+          <div class="shipment-details">
+            <div class="detail-row">
+              <span class="label">客户 / Client:</span>
+              <span class="value">TechGlobal (UK)</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">联系方式 / Contact:</span>
+              <span class="value">+44 7712345678</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">客户时区 / Client Timezone:</span>
+              <span class="value">UTC1</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">运输方式 / Transport:</span>
+              <span class="value">Air</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">包裹数量 / Packages:</span>
+              <span class="value">25</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">货物描述 / Description:</span>
+              <span class="value">Computer peripherals</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">创建时间 / Created:</span>
+              <span class="value">2025年05月05日 14:30</span>
+            </div>
+            
+            
+            
+            <div class="detail-row">
+              <span class="label">预计到达 / Est. Arrival:</span>
+              <span class="value">2025年05月12日</span>
+            </div>
+            
+            
+            
+            
+          </div>
+        </div>
+      
+        
+        <div class="shipment-card status-已到达">
+          <div class="shipment-header">
+            <h3><a href="/shipment_detail.html?tracking=XYZ-5678_FURN_10_20250502T110000">XYZ-5678_FURN_10_20250502T110000</a></h3>
+            <div class="status-badge">
+               ✅ 抵达目的港 / Arrived
+                
+            </div>
+          </div>
+          
+          <div class="shipment-details">
+            <div class="detail-row">
+              <span class="label">客户 / Client:</span>
+              <span class="value">EuroTrade (DE)</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">联系方式 / Contact:</span>
+              <span class="value">+49 1761234567</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">客户时区 / Client Timezone:</span>
+              <span class="value">UTC2</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">运输方式 / Transport:</span>
+              <span class="value">Sea</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">包裹数量 / Packages:</span>
+              <span class="value">10</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">货物描述 / Description:</span>
+              <span class="value">Office furniture</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">创建时间 / Created:</span>
+              <span class="value">2025年05月02日 11:00</span>
+            </div>
+            
+            
+            <div class="detail-row">
+              <span class="label">发货日期 / Shipped:</span>
+              <span class="value">2025年05月03日</span>
+            </div>
+            
+            
+            <div class="detail-row">
+              <span class="label">预计到达 / Est. Arrival:</span>
+              <span class="value">2025年05月28日</span>
+            </div>
+            
+            
+            <div class="detail-row">
+              <span class="label">实际到达 / Actual Arrival:</span>
+              <span class="value">2025年05月28日</span>
+            </div>
+            
+            
+            
+          </div>
+        </div>
+      
+        
+        <div class="shipment-card status-已提货">
+          <div class="shipment-header">
+            <h3><a href="/shipment_detail.html?tracking=NTS-2304_CLOTH_30_20250420T082000">NTS-2304_CLOTH_30_20250420T082000</a></h3>
+            <div class="status-badge">
+               📦 已提货 / Picked Up
+              
+            </div>
+          </div>
+          
+          <div class="shipment-details">
+            <div class="detail-row">
+              <span class="label">客户 / Client:</span>
+              <span class="value">Ruixin (SA)</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">联系方式 / Contact:</span>
+              <span class="value">+966 551234567</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">客户时区 / Client Timezone:</span>
+              <span class="value">UTC3</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">运输方式 / Transport:</span>
+              <span class="value">Sea</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">包裹数量 / Packages:</span>
+              <span class="value">30</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">货物描述 / Description:</span>
+              <span class="value">Textile products, winter collection</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">创建时间 / Created:</span>
+              <span class="value">2025年04月20日 08:20</span>
+            </div>
+            
+            
+            <div class="detail-row">
+              <span class="label">发货日期 / Shipped:</span>
+              <span class="value">2025年04月21日</span>
+            </div>
+            
+            
+            <div class="detail-row">
+              <span class="label">预计到达 / Est. Arrival:</span>
+              <span class="value">2025年05月21日</span>
+            </div>
+            
+            
+            <div class="detail-row">
+              <span class="label">实际到达 / Actual Arrival:</span>
+              <span class="value">2025年05月20日</span>
+            </div>
+            
+            
+            
+            <div class="detail-row">
+              <span class="label">提货日期 / Pickup:</span>
+              <span class="value">2025年05月22日</span>
+            </div>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+    <!-- Pending shipments section -->
+    <div class="shipments pending-shipments" style="display: none;">
+      
+        
+        <div class="shipment-card status-未发货">
+          <div class="shipment-header">
+            <h3><a href="/shipment_detail.html?tracking=ABC-1234_TECH_25_20250505T143000">ABC-1234_TECH_25_20250505T143000</a></h3>
+            <div class="status-badge">🟡 等待发货 / Pending</div>
+          </div>
+          
+          <div class="shipment-details">
+            <div class="detail-row">
+              <span class="label">客户 / Client:</span>
+              <span class="value">TechGlobal (UK)</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">联系方式 / Contact:</span>
+              <span class="value">+44 7712345678</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">客户时区 / Client Timezone:</span>
+              <span class="value">UTC1</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">运输方式 / Transport:</span>
+              <span class="value">Air</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">包裹数量 / Packages:</span>
+              <span class="value">25</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">创建时间 / Created:</span>
+              <span class="value">2025年05月05日 14:30</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">预计到达 / Est. Arrival:</span>
+              <span class="value">2025年05月12日</span>
+            </div>
+          </div>
+        </div>
+      
+    </div>
+    
+    <!-- Shipped shipments section -->
+    <div class="shipments shipped-shipments" style="display: none;">
+      
+        
+        <div class="shipment-card status-已发货">
+          <div class="shipment-header">
+            <h3><a href="/shipment_detail.html?tracking=NTS-2304_ELECT_50_20250507T093000">NTS-2304_ELECT_50_20250507T093000</a></h3>
+            <div class="status-badge">🚢 运输中 / In Transit</div>
+          </div>
+          
+          <div class="shipment-details">
+            <div class="detail-row">
+              <span class="label">客户 / Client:</span>
+              <span class="value">Ruixin (SA)</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">联系方式 / Contact:</span>
+              <span class="value">+966 551234567</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">客户时区 / Client Timezone:</span>
+              <span class="value">UTC3</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">运输方式 / Transport:</span>
+              <span class="value">Sea</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">包裹数量 / Packages:</span>
+              <span class="value">50</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">发货日期 / Shipped:</span>
+              <span class="value">2025年05月08日</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">预计到达 / Est. Arrival:</span>
+              <span class="value">2025年06月07日</span>
+            </div>
+          </div>
+        </div>
+      
+    </div>
+    
+    <!-- Arrived shipments section -->
+    <div class="shipments arrived-shipments" style="display: none;">
+      
+        
+        <div class="shipment-card status-已到达">
+          <div class="shipment-header">
+            <h3><a href="/shipment_detail.html?tracking=XYZ-5678_FURN_10_20250502T110000">XYZ-5678_FURN_10_20250502T110000</a></h3>
+            <div class="status-badge">✅ 抵达目的港 / Arrived</div>
+          </div>
+          
+          <div class="shipment-details">
+            <div class="detail-row">
+              <span class="label">客户 / Client:</span>
+              <span class="value">EuroTrade (DE)</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">联系方式 / Contact:</span>
+              <span class="value">+49 1761234567</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">客户时区 / Client Timezone:</span>
+              <span class="value">UTC2</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">运输方式 / Transport:</span>
+              <span class="value">Sea</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">包裹数量 / Packages:</span>
+              <span class="value">10</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">发货日期 / Shipped:</span>
+              <span class="value">2025年05月03日</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">实际到达 / Actual Arrival:</span>
+              <span class="value">2025年05月28日</span>
+            </div>
+          </div>
+        </div>
+      
+    </div>
+    
+    <!-- Picked up shipments section -->
+    <div class="shipments picked-shipments" style="display: none;">
+      
+        
+        <div class="shipment-card status-已提货">
+          <div class="shipment-header">
+            <h3><a href="/shipment_detail.html?tracking=NTS-2304_CLOTH_30_20250420T082000">NTS-2304_CLOTH_30_20250420T082000</a></h3>
+            <div class="status-badge">📦 已提货 / Picked Up</div>
+          </div>
+          
+          <div class="shipment-details">
+            <div class="detail-row">
+              <span class="label">客户 / Client:</span>
+              <span class="value">Ruixin (SA)</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">联系方式 / Contact:</span>
+              <span class="value">+966 551234567</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">客户时区 / Client Timezone:</span>
+              <span class="value">UTC3</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">运输方式 / Transport:</span>
+              <span class="value">Sea</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">包裹数量 / Packages:</span>
+              <span class="value">30</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">发货日期 / Shipped:</span>
+              <span class="value">2025年04月21日</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">实际到达 / Actual Arrival:</span>
+              <span class="value">2025年05月20日</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">提货日期 / Pickup:</span>
+              <span class="value">2025年05月22日</span>
+            </div>
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+<script>
+  // Simple filter functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const shipmentSections = {
+      '#all': document.querySelector('.all-shipments'),
+      '#pending': document.querySelector('.pending-shipments'),
+      '#shipped': document.querySelector('.shipped-shipments'),
+      '#arrived': document.querySelector('.arrived-shipments'),
+      '#picked': document.querySelector('.picked-shipments')
+    };
+    
+    filterButtons.forEach(button => {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // Remove active class from all buttons
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        
+        // Add active class to clicked button
+        this.classList.add('active');
+        
+        // Hide all shipment sections
+        Object.values(shipmentSections).forEach(section => {
+          if (section) section.style.display = 'none';
+        });
+        
+        // Show selected section
+        const targetId = this.getAttribute('href');
+        if (shipmentSections[targetId]) {
+          shipmentSections[targetId].style.display = 'grid';
+        }
+      });
+    });
+  });
+</script>
+  </body>
+</html>

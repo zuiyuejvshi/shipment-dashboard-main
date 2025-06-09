@@ -1,0 +1,204 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>外贸发货看板</title>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <nav>
+  
+    <a href="/" class="current">首页</a>
+  
+    <a href="/about.html">关于</a>
+  
+    <a href="/query.html">订单查询</a>
+  
+    <a href="/shipments.html">运单列表</a>
+  
+    <a href="/add_shipment.html">添加运单</a>
+  
+    <a href="/staff.html">团队</a>
+  
+</nav>
+    <div class="home-container">
+  <div class="home-header">
+    <h1>外贸发货看板</h1>
+    <h2>International Shipping Dashboard</h2>
+    <p class="subtitle">便捷高效的国际物流追踪系统</p>
+  </div>
+  
+  <div class="dashboard-summary">
+    
+    
+    
+    
+    
+    <div class="status-box pending">
+      <div class="status-icon">🟡</div>
+      <div class="status-info">
+        <h3>未发货</h3>
+        <p>Pending</p>
+        <div class="status-count">1</div>
+      </div>
+    </div>
+    
+    <div class="status-box shipped">
+      <div class="status-icon">🚢</div>
+      <div class="status-info">
+        <h3>已发货</h3>
+        <p>Shipped</p>
+        <div class="status-count">1</div>
+      </div>
+    </div>
+    
+    <div class="status-box arrived">
+      <div class="status-icon">✅</div>
+      <div class="status-info">
+        <h3>已到达</h3>
+        <p>Arrived</p>
+        <div class="status-count">1</div>
+      </div>
+    </div>
+    
+    <div class="status-box picked">
+      <div class="status-icon">📦</div>
+      <div class="status-info">
+        <h3>已提货</h3>
+        <p>Picked Up</p>
+        <div class="status-count">1</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="dashboard-actions">
+    <a href="/shipments.html" class="btn btn-primary">查看所有运单</a>
+    <a href="/add_shipment.html" class="btn btn-secondary">添加新运单</a>
+  </div>
+  
+  <div class="recent-shipments">
+    <h2>最近发货 / Recent Shipments</h2>
+    <div class="shipment-cards">
+      
+      
+        
+        <div class="shipment-card status-已发货">
+          <div class="shipment-header">
+            <h3><a href="/shipment_detail.html?tracking=NTS-2304_ELECT_50_20250507T093000">NTS-2304_ELECT_50_20250507T093000</a></h3>
+            <div class="status-badge">
+               🚢 运输中
+                
+            </div>
+          </div>
+          <div class="shipment-details">
+            <div class="detail-row">
+              <span class="label">客户 / Client:</span>
+              <span class="value">Ruixin</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">创建时间 / Created:</span>
+              <span class="value">2025年05月07日</span>
+            </div>
+            
+            <div class="detail-row">
+              <span class="label">发货日期 / Shipped:</span>
+              <span class="value">2025年05月08日</span>
+            </div>
+            
+          </div>
+          <div class="card-action">
+            <a href="/shipment_detail.html?tracking=NTS-2304_ELECT_50_20250507T093000">查看详情 &raquo;</a>
+          </div>
+        </div>
+      
+        
+        <div class="shipment-card status-未发货">
+          <div class="shipment-header">
+            <h3><a href="/shipment_detail.html?tracking=ABC-1234_TECH_25_20250505T143000">ABC-1234_TECH_25_20250505T143000</a></h3>
+            <div class="status-badge">
+               🟡 等待发货
+                
+            </div>
+          </div>
+          <div class="shipment-details">
+            <div class="detail-row">
+              <span class="label">客户 / Client:</span>
+              <span class="value">TechGlobal</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">创建时间 / Created:</span>
+              <span class="value">2025年05月05日</span>
+            </div>
+            
+          </div>
+          <div class="card-action">
+            <a href="/shipment_detail.html?tracking=ABC-1234_TECH_25_20250505T143000">查看详情 &raquo;</a>
+          </div>
+        </div>
+      
+        
+        <div class="shipment-card status-已到达">
+          <div class="shipment-header">
+            <h3><a href="/shipment_detail.html?tracking=XYZ-5678_FURN_10_20250502T110000">XYZ-5678_FURN_10_20250502T110000</a></h3>
+            <div class="status-badge">
+               ✅ 抵达目的港
+                
+            </div>
+          </div>
+          <div class="shipment-details">
+            <div class="detail-row">
+              <span class="label">客户 / Client:</span>
+              <span class="value">EuroTrade</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">创建时间 / Created:</span>
+              <span class="value">2025年05月02日</span>
+            </div>
+            
+            <div class="detail-row">
+              <span class="label">发货日期 / Shipped:</span>
+              <span class="value">2025年05月03日</span>
+            </div>
+            
+          </div>
+          <div class="card-action">
+            <a href="/shipment_detail.html?tracking=XYZ-5678_FURN_10_20250502T110000">查看详情 &raquo;</a>
+          </div>
+        </div>
+      
+        
+        <div class="shipment-card status-已提货">
+          <div class="shipment-header">
+            <h3><a href="/shipment_detail.html?tracking=NTS-2304_CLOTH_30_20250420T082000">NTS-2304_CLOTH_30_20250420T082000</a></h3>
+            <div class="status-badge">
+               📦 已提货
+              
+            </div>
+          </div>
+          <div class="shipment-details">
+            <div class="detail-row">
+              <span class="label">客户 / Client:</span>
+              <span class="value">Ruixin</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">创建时间 / Created:</span>
+              <span class="value">2025年04月20日</span>
+            </div>
+            
+            <div class="detail-row">
+              <span class="label">发货日期 / Shipped:</span>
+              <span class="value">2025年04月21日</span>
+            </div>
+            
+          </div>
+          <div class="card-action">
+            <a href="/shipment_detail.html?tracking=NTS-2304_CLOTH_30_20250420T082000">查看详情 &raquo;</a>
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+  </body>
+</html>

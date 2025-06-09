@@ -1,0 +1,37 @@
+# Site settings
+title: 外贸发货看板
+description: 便捷高效的国际物流追踪系统
+baseurl: ""
+url: ""
+
+# Database configuration
+db:
+  host: gateway01.ap-southeast-1.prod.aws.tidbcloud.com
+  user: 3uRMqrpVw7VeBqR.root
+  password: r76xy1HDH6bGg85x
+  database: test
+  port: 4000
+  ssl_mode: verify_identity
+
+# 关键配置
+url: "https://knight-123123.github.io"
+baseurl: "/shipment-dashboard"
+
+# SCSS配置
+sass:
+  sass_dir: _sass
+  style: compressed
+
+plugins:
+  - jekyll-sass-converter
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: "default"
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock

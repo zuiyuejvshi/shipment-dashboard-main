@@ -1,0 +1,326 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>运单详情</title>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <nav>
+  
+    <a href="/">首页</a>
+  
+    <a href="/about.html">关于</a>
+  
+    <a href="/query.html">订单查询</a>
+  
+    <a href="/shipments.html">运单列表</a>
+  
+    <a href="/add_shipment.html">添加运单</a>
+  
+    <a href="/staff.html">团队</a>
+  
+</nav>
+    <div class="shipment-detail-page">
+  <h1>运单详情 / Shipment Details</h1>
+  
+  <div class="detail-container">
+    <div id="shipmentDetail" class="detail-card">
+      <div class="loader">
+        <div class="spinner"></div>
+        <p>加载运单详情...</p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="actions">
+    <a href="/shipments.html" class="btn-back">返回列表 / Back to List</a>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get tracking number from URL
+    const params = new URLSearchParams(window.location.search);
+    const trackingNumber = params.get('tracking');
+    
+    if (!trackingNumber) {
+      document.getElementById('shipmentDetail').innerHTML = '<div class="error">未提供运单号 / No tracking number provided</div>';
+      return;
+    }
+    
+    // In a real application, this would be a server request
+    // For this demo, we'll use JavaScript to find the shipment in our data
+    
+    // This is a simulation - in a real Jekyll site, we'd use Liquid templates
+    // to directly render the specific shipment data
+    const shipments = [
+      
+      {
+        tracking_number: "NTS-2304_ELECT_50_20250507T093000",
+        client_code: "NTS-2304",
+        transport_mode: "Sea",
+        status: "已发货",
+        goods_description: "Electronic components, model XC-2304",
+        package_count: 50,
+        estimated_days: 30,
+        created_at: "2025-05-07 09:30:00 +0000",
+        shipped_date: "2025-05-08",
+        estimated_arrival: "2025-06-07",
+        arrival_date: "",
+        pickup_date: ""
+      },
+      
+      {
+        tracking_number: "ABC-1234_TECH_25_20250505T143000",
+        client_code: "ABC-1234",
+        transport_mode: "Air",
+        status: "未发货",
+        goods_description: "Computer peripherals",
+        package_count: 25,
+        estimated_days: 7,
+        created_at: "2025-05-05 14:30:00 +0000",
+        shipped_date: "",
+        estimated_arrival: "2025-05-12",
+        arrival_date: "",
+        pickup_date: ""
+      },
+      
+      {
+        tracking_number: "XYZ-5678_FURN_10_20250502T110000",
+        client_code: "XYZ-5678",
+        transport_mode: "Sea",
+        status: "已到达",
+        goods_description: "Office furniture",
+        package_count: 10,
+        estimated_days: 25,
+        created_at: "2025-05-02 11:00:00 +0000",
+        shipped_date: "2025-05-03",
+        estimated_arrival: "2025-05-28",
+        arrival_date: "2025-05-28",
+        pickup_date: ""
+      },
+      
+      {
+        tracking_number: "NTS-2304_CLOTH_30_20250420T082000",
+        client_code: "NTS-2304",
+        transport_mode: "Sea",
+        status: "已提货",
+        goods_description: "Textile products, winter collection",
+        package_count: 30,
+        estimated_days: 30,
+        created_at: "2025-04-20 08:20:00 +0000",
+        shipped_date: "2025-04-21",
+        estimated_arrival: "2025-05-21",
+        arrival_date: "2025-05-20",
+        pickup_date: "2025-05-22"
+      }
+      
+    ];
+    
+    const clients = [
+      
+      {
+        code: "NTS-2304",
+        name: "Ruixin",
+        timezone_offset: "3",
+        language: "ar",
+        country: "SA",
+        contact: "+966 551234567"
+      },
+      
+      {
+        code: "ABC-1234",
+        name: "TechGlobal",
+        timezone_offset: "1",
+        language: "en",
+        country: "UK",
+        contact: "+44 7712345678"
+      },
+      
+      {
+        code: "XYZ-5678",
+        name: "EuroTrade",
+        timezone_offset: "2",
+        language: "de",
+        country: "DE",
+        contact: "+49 1761234567"
+      }
+      
+    ];
+    
+    // Find the shipment
+    const shipment = shipments.find(s => s.tracking_number === trackingNumber);
+    
+    if (!shipment) {
+      document.getElementById('shipmentDetail').innerHTML = '<div class="error">未找到运单 / Shipment not found</div>';
+      return;
+    }
+    
+    // Find the client
+    const client = clients.find(c => c.code === shipment.client_code);
+    
+    if (!client) {
+      document.getElementById('shipmentDetail').innerHTML = '<div class="error">未找到客户信息 / Client information not found</div>';
+      return;
+    }
+    
+    // Format dates
+    function formatDate(dateString) {
+      if (!dateString) return 'N/A';
+      const date = new Date(dateString);
+      return date.toLocaleDateString('zh-CN', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+      }).replace(/\//g, '年').replace(/\//g, '月') + '日';
+    }
+    
+    // Determine status text and icon
+    let statusText, statusIcon;
+    switch(shipment.status) {
+      case '未发货':
+        statusText = '等待发货 / Pending';
+        statusIcon = '🟡';
+        break;
+      case '已发货':
+        statusText = '运输中 / In Transit';
+        statusIcon = '🚢';
+        break;
+      case '已到达':
+        statusText = '抵达目的港 / Arrived';
+        statusIcon = '✅';
+        break;
+      case '已提货':
+        statusText = '已提货 / Picked Up';
+        statusIcon = '📦';
+        break;
+      default:
+        statusText = '未知状态 / Unknown';
+        statusIcon = '❓';
+    }
+    
+    // Generate HTML
+    const html = `
+      <div class="detail-header">
+        <h2>${shipment.tracking_number}</h2>
+        <div class="status-badge status-${shipment.status}">${statusIcon} ${statusText}</div>
+      </div>
+      
+      <div class="detail-sections">
+        <div class="detail-section">
+          <h3>客户信息 / Client Information</h3>
+          <div class="detail-row">
+            <span class="label">客户名称 / Name:</span>
+            <span class="value">${client.name}</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">国家 / Country:</span>
+            <span class="value">${client.country}</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">联系方式 / Contact:</span>
+            <span class="value">${client.contact}</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">语言 / Language:</span>
+            <span class="value">${client.language}</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">时区 / Timezone:</span>
+            <span class="value">UTC${client.timezone_offset}</span>
+          </div>
+        </div>
+        
+        <div class="detail-section">
+          <h3>货物信息 / Shipment Information</h3>
+          <div class="detail-row">
+            <span class="label">运输方式 / Mode:</span>
+            <span class="value">${shipment.transport_mode}</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">包裹数量 / Packages:</span>
+            <span class="value">${shipment.package_count}</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">估计运输时间 / Est. Days:</span>
+            <span class="value">${shipment.estimated_days} 天 / days</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">货物描述 / Description:</span>
+            <span class="value">${shipment.goods_description}</span>
+          </div>
+        </div>
+        
+        <div class="detail-section">
+          <h3>时间信息 / Timeline</h3>
+          <div class="detail-row">
+            <span class="label">创建时间 / Created:</span>
+            <span class="value">${new Date(shipment.created_at).toLocaleString('zh-CN')}</span>
+          </div>
+          ${shipment.shipped_date ? `
+          <div class="detail-row">
+            <span class="label">发货日期 / Shipped:</span>
+            <span class="value">${formatDate(shipment.shipped_date)}</span>
+          </div>
+          ` : ''}
+          <div class="detail-row">
+            <span class="label">预计到达 / Est. Arrival:</span>
+            <span class="value">${formatDate(shipment.estimated_arrival)}</span>
+          </div>
+          ${shipment.arrival_date ? `
+          <div class="detail-row">
+            <span class="label">实际到达 / Arrival:</span>
+            <span class="value">${formatDate(shipment.arrival_date)}</span>
+          </div>
+          ` : ''}
+          ${shipment.pickup_date ? `
+          <div class="detail-row">
+            <span class="label">提货日期 / Pickup:</span>
+            <span class="value">${formatDate(shipment.pickup_date)}</span>
+          </div>
+          ` : ''}
+        </div>
+      </div>
+      
+      <div class="timeline">
+        <div class="timeline-item ${shipment.status !== '未发货' ? 'completed' : 'active'}">
+          <div class="timeline-icon">📝</div>
+          <div class="timeline-content">
+            <h4>订单创建 / Order Created</h4>
+            <p>${new Date(shipment.created_at).toLocaleString('zh-CN')}</p>
+          </div>
+        </div>
+        
+        <div class="timeline-item ${shipment.status === '未发货' ? 'pending' : shipment.status !== '未发货' ? 'completed' : ''}">
+          <div class="timeline-icon">🚚</div>
+          <div class="timeline-content">
+            <h4>发货 / Shipped</h4>
+            <p>${shipment.shipped_date ? formatDate(shipment.shipped_date) : '等待中 / Waiting'}</p>
+          </div>
+        </div>
+        
+        <div class="timeline-item ${shipment.status === '已到达' || shipment.status === '已提货' ? 'completed' : shipment.status === '已发货' ? 'active' : 'pending'}">
+          <div class="timeline-icon">🏢</div>
+          <div class="timeline-content">
+            <h4>到达 / Arrival</h4>
+            <p>${shipment.arrival_date ? formatDate(shipment.arrival_date) : '预计 / Est: ' + formatDate(shipment.estimated_arrival)}</p>
+          </div>
+        </div>
+        
+        <div class="timeline-item ${shipment.status === '已提货' ? 'completed' : 'pending'}">
+          <div class="timeline-icon">📦</div>
+          <div class="timeline-content">
+            <h4>提货 / Pickup</h4>
+            <p>${shipment.pickup_date ? formatDate(shipment.pickup_date) : '等待中 / Waiting'}</p>
+          </div>
+        </div>
+      </div>
+    `;
+    
+    document.getElementById('shipmentDetail').innerHTML = html;
+  });
+</script>
+  </body>
+</html>

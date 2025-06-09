@@ -1,0 +1,347 @@
+---
+layout: default
+title: 运单列表
+---
+
+<div class="shipment-dashboard">
+  <h1>外贸发货看板 / Shipment Dashboard</h1>
+  
+  <div class="dashboard-actions">
+    <a href="{{ '/add_shipment.html' | relative_url }}" class="btn-add">添加新运单 / Add New Shipment</a>
+  </div>
+  
+  <!-- Filter controls -->
+  <div class="filter-controls">
+    <h3>按状态筛选 / Filter by Status</h3>
+    <div class="filter-buttons">
+      <a href="#all" class="filter-btn active">全部 / All</a>
+      <a href="#pending" class="filter-btn">未发货 / Pending</a>
+      <a href="#shipped" class="filter-btn">已发货 / Shipped</a>
+      <a href="#arrived" class="filter-btn">已到达 / Arrived</a>
+      <a href="#picked" class="filter-btn">已提货 / Picked Up</a>
+    </div>
+  </div>
+
+  <!-- Status counts -->
+  <div class="status-summary">
+    {% assign pending_shipments = site.data.shipments | where: "status", "未发货" %}
+    {% assign shipped_shipments = site.data.shipments | where: "status", "已发货" %}
+    {% assign arrived_shipments = site.data.shipments | where: "status", "已到达" %}
+    {% assign picked_shipments = site.data.shipments | where: "status", "已提货" %}
+    
+    <div class="status-item">
+      <h4>未发货 / Pending</h4>
+      <div class="count">{{ pending_shipments.size }}</div>
+    </div>
+    <div class="status-item">
+      <h4>已发货 / Shipped</h4>
+      <div class="count">{{ shipped_shipments.size }}</div>
+    </div>
+    <div class="status-item">
+      <h4>已到达 / Arrived</h4>
+      <div class="count">{{ arrived_shipments.size }}</div>
+    </div>
+    <div class="status-item">
+      <h4>已提货 / Picked Up</h4>
+      <div class="count">{{ picked_shipments.size }}</div>
+    </div>
+  </div>
+
+  <!-- Shipment list -->
+  <div class="shipment-list">
+    <h2>运单列表 / Shipment List</h2>
+    
+    <div class="shipments all-shipments">
+      {% for shipment in site.data.shipments %}
+        {% assign client = site.data.clients | where: "code", shipment.client_code | first %}
+        <div class="shipment-card status-{{ shipment.status }}">
+          <div class="shipment-header">
+            <h3><a href="{{ '/shipment_detail.html' | relative_url }}?tracking={{ shipment.tracking_number }}">{{ shipment.tracking_number }}</a></h3>
+            <div class="status-badge">
+              {% case shipment.status %}
+                {% when '未发货' %} 🟡 等待发货 / Pending
+                {% when '已发货' %} 🚢 运输中 / In Transit
+                {% when '已到达' %} ✅ 抵达目的港 / Arrived
+                {% when '已提货' %} 📦 已提货 / Picked Up
+              {% endcase %}
+            </div>
+          </div>
+          
+          <div class="shipment-details">
+            <div class="detail-row">
+              <span class="label">客户 / Client:</span>
+              <span class="value">{{ client.name }} ({{ client.country }})</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">联系方式 / Contact:</span>
+              <span class="value">{{ client.contact }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">客户时区 / Client Timezone:</span>
+              <span class="value">UTC{{ client.timezone_offset }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">运输方式 / Transport:</span>
+              <span class="value">{{ shipment.transport_mode }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">包裹数量 / Packages:</span>
+              <span class="value">{{ shipment.package_count }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">货物描述 / Description:</span>
+              <span class="value">{{ shipment.goods_description }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">创建时间 / Created:</span>
+              <span class="value">{{ shipment.created_at | date: "%Y年%m月%d日 %H:%M" }}</span>
+            </div>
+            
+            {% if shipment.shipped_date %}
+            <div class="detail-row">
+              <span class="label">发货日期 / Shipped:</span>
+              <span class="value">{{ shipment.shipped_date | date: "%Y年%m月%d日" }}</span>
+            </div>
+            {% endif %}
+            
+            <div class="detail-row">
+              <span class="label">预计到达 / Est. Arrival:</span>
+              <span class="value">{{ shipment.estimated_arrival | date: "%Y年%m月%d日" }}</span>
+            </div>
+            
+            {% if shipment.arrival_date %}
+            <div class="detail-row">
+              <span class="label">实际到达 / Actual Arrival:</span>
+              <span class="value">{{ shipment.arrival_date | date: "%Y年%m月%d日" }}</span>
+            </div>
+            {% endif %}
+            
+            {% if shipment.pickup_date %}
+            <div class="detail-row">
+              <span class="label">提货日期 / Pickup:</span>
+              <span class="value">{{ shipment.pickup_date | date: "%Y年%m月%d日" }}</span>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    
+    <!-- Pending shipments section -->
+    <div class="shipments pending-shipments" style="display: none;">
+      {% for shipment in pending_shipments %}
+        {% assign client = site.data.clients | where: "code", shipment.client_code | first %}
+        <div class="shipment-card status-{{ shipment.status }}">
+          <div class="shipment-header">
+            <h3><a href="{{ '/shipment_detail.html' | relative_url }}?tracking={{ shipment.tracking_number }}">{{ shipment.tracking_number }}</a></h3>
+            <div class="status-badge">🟡 等待发货 / Pending</div>
+          </div>
+          
+          <div class="shipment-details">
+            <div class="detail-row">
+              <span class="label">客户 / Client:</span>
+              <span class="value">{{ client.name }} ({{ client.country }})</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">联系方式 / Contact:</span>
+              <span class="value">{{ client.contact }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">客户时区 / Client Timezone:</span>
+              <span class="value">UTC{{ client.timezone_offset }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">运输方式 / Transport:</span>
+              <span class="value">{{ shipment.transport_mode }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">包裹数量 / Packages:</span>
+              <span class="value">{{ shipment.package_count }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">创建时间 / Created:</span>
+              <span class="value">{{ shipment.created_at | date: "%Y年%m月%d日 %H:%M" }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">预计到达 / Est. Arrival:</span>
+              <span class="value">{{ shipment.estimated_arrival | date: "%Y年%m月%d日" }}</span>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    
+    <!-- Shipped shipments section -->
+    <div class="shipments shipped-shipments" style="display: none;">
+      {% for shipment in shipped_shipments %}
+        {% assign client = site.data.clients | where: "code", shipment.client_code | first %}
+        <div class="shipment-card status-{{ shipment.status }}">
+          <div class="shipment-header">
+            <h3><a href="{{ '/shipment_detail.html' | relative_url }}?tracking={{ shipment.tracking_number }}">{{ shipment.tracking_number }}</a></h3>
+            <div class="status-badge">🚢 运输中 / In Transit</div>
+          </div>
+          
+          <div class="shipment-details">
+            <div class="detail-row">
+              <span class="label">客户 / Client:</span>
+              <span class="value">{{ client.name }} ({{ client.country }})</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">联系方式 / Contact:</span>
+              <span class="value">{{ client.contact }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">客户时区 / Client Timezone:</span>
+              <span class="value">UTC{{ client.timezone_offset }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">运输方式 / Transport:</span>
+              <span class="value">{{ shipment.transport_mode }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">包裹数量 / Packages:</span>
+              <span class="value">{{ shipment.package_count }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">发货日期 / Shipped:</span>
+              <span class="value">{{ shipment.shipped_date | date: "%Y年%m月%d日" }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">预计到达 / Est. Arrival:</span>
+              <span class="value">{{ shipment.estimated_arrival | date: "%Y年%m月%d日" }}</span>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    
+    <!-- Arrived shipments section -->
+    <div class="shipments arrived-shipments" style="display: none;">
+      {% for shipment in arrived_shipments %}
+        {% assign client = site.data.clients | where: "code", shipment.client_code | first %}
+        <div class="shipment-card status-{{ shipment.status }}">
+          <div class="shipment-header">
+            <h3><a href="{{ '/shipment_detail.html' | relative_url }}?tracking={{ shipment.tracking_number }}">{{ shipment.tracking_number }}</a></h3>
+            <div class="status-badge">✅ 抵达目的港 / Arrived</div>
+          </div>
+          
+          <div class="shipment-details">
+            <div class="detail-row">
+              <span class="label">客户 / Client:</span>
+              <span class="value">{{ client.name }} ({{ client.country }})</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">联系方式 / Contact:</span>
+              <span class="value">{{ client.contact }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">客户时区 / Client Timezone:</span>
+              <span class="value">UTC{{ client.timezone_offset }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">运输方式 / Transport:</span>
+              <span class="value">{{ shipment.transport_mode }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">包裹数量 / Packages:</span>
+              <span class="value">{{ shipment.package_count }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">发货日期 / Shipped:</span>
+              <span class="value">{{ shipment.shipped_date | date: "%Y年%m月%d日" }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">实际到达 / Actual Arrival:</span>
+              <span class="value">{{ shipment.arrival_date | date: "%Y年%m月%d日" }}</span>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    
+    <!-- Picked up shipments section -->
+    <div class="shipments picked-shipments" style="display: none;">
+      {% for shipment in picked_shipments %}
+        {% assign client = site.data.clients | where: "code", shipment.client_code | first %}
+        <div class="shipment-card status-{{ shipment.status }}">
+          <div class="shipment-header">
+            <h3><a href="{{ '/shipment_detail.html' | relative_url }}?tracking={{ shipment.tracking_number }}">{{ shipment.tracking_number }}</a></h3>
+            <div class="status-badge">📦 已提货 / Picked Up</div>
+          </div>
+          
+          <div class="shipment-details">
+            <div class="detail-row">
+              <span class="label">客户 / Client:</span>
+              <span class="value">{{ client.name }} ({{ client.country }})</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">联系方式 / Contact:</span>
+              <span class="value">{{ client.contact }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">客户时区 / Client Timezone:</span>
+              <span class="value">UTC{{ client.timezone_offset }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">运输方式 / Transport:</span>
+              <span class="value">{{ shipment.transport_mode }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">包裹数量 / Packages:</span>
+              <span class="value">{{ shipment.package_count }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">发货日期 / Shipped:</span>
+              <span class="value">{{ shipment.shipped_date | date: "%Y年%m月%d日" }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">实际到达 / Actual Arrival:</span>
+              <span class="value">{{ shipment.arrival_date | date: "%Y年%m月%d日" }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">提货日期 / Pickup:</span>
+              <span class="value">{{ shipment.pickup_date | date: "%Y年%m月%d日" }}</span>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+  // Simple filter functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const shipmentSections = {
+      '#all': document.querySelector('.all-shipments'),
+      '#pending': document.querySelector('.pending-shipments'),
+      '#shipped': document.querySelector('.shipped-shipments'),
+      '#arrived': document.querySelector('.arrived-shipments'),
+      '#picked': document.querySelector('.picked-shipments')
+    };
+    
+    filterButtons.forEach(button => {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // Remove active class from all buttons
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        
+        // Add active class to clicked button
+        this.classList.add('active');
+        
+        // Hide all shipment sections
+        Object.values(shipmentSections).forEach(section => {
+          if (section) section.style.display = 'none';
+        });
+        
+        // Show selected section
+        const targetId = this.getAttribute('href');
+        if (shipmentSections[targetId]) {
+          shipmentSections[targetId].style.display = 'grid';
+        }
+      });
+    });
+  });
+</script>
