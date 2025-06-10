@@ -74,10 +74,21 @@ title: 添加运单
       </div>
     </div>
   </div>
+
+  <!-- Error Modal -->
+  <div id="errorModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <h2>❌ 错误 / Error</h2>
+      <p id="errorMessage"></p>
+      <div class="modal-actions">
+        <button onclick="document.getElementById('errorModal').style.display='none'" class="btn-primary">确定 / OK</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     
     // Get form values
@@ -100,14 +111,44 @@ title: 添加运单
     // Generate tracking number
     const trackingNumber = `${clientCode}_${goodsShortName}_${packageCount}_${timestamp}`;
     
-    // In a real application, this would save the data to the server
-    // For this demo, just show the success modal
-    document.getElementById('trackingNumber').textContent = trackingNumber;
-    document.getElementById('viewShipmentLink').href = `/shipment_detail.html?tracking=${trackingNumber}`;
-    document.getElementById('successModal').style.display = 'flex';
+    // Prepare data for API
+    const shipmentData = {
+      tracking_number: trackingNumber,
+      client_code: clientCode,
+      transport_mode: transportMode,
+      goods_description: goodsDescription,
+      package_count: parseInt(packageCount),
+      estimated_days: parseInt(estimatedDays),
+      created_at: now.toISOString()
+    };
     
-    // In a real application with server-side processing, you would send the form data
-    // to the server and then redirect the user to the shipment detail page
+    try {
+      // Send data to API
+      const response = await fetch('/api/shipments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(shipmentData)
+      });
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        // Show success modal
+        document.getElementById('trackingNumber').textContent = trackingNumber;
+        document.getElementById('viewShipmentLink').href = `/shipment_detail.html?tracking=${trackingNumber}`;
+        document.getElementById('successModal').style.display = 'flex';
+      } else {
+        // Show error modal
+        document.getElementById('errorMessage').textContent = result.message;
+        document.getElementById('errorModal').style.display = 'flex';
+      }
+    } catch (error) {
+      // Show error modal
+      document.getElementById('errorMessage').textContent = '保存失败，请稍后重试 / Save failed, please try again later';
+      document.getElementById('errorModal').style.display = 'flex';
+    }
     
     return false;
   }
